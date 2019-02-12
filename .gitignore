@@ -269,3 +269,4 @@ ALL_BUILD.vcxproj.*
 ZERO_CHECK.vcxproj
 ZERO_CHECK.vcxproj.*
 App_h.h
+**/output/*
