@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.9)
 project(BlankApp)
 
-#set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+configure_file(module.g.cpp "Generated Files/module.g.cpp" COPYONLY)
 
 set(SOURCE_FILES
   App.cpp
@@ -58,10 +60,13 @@ set_property(SOURCE "App.xaml" PROPERTY VS_XAML_TYPE "ApplicationDefinition")
 #source_group("Xaml Files" FILES ${XAML_FILES})
 #source_group("Idl Files" FILES ${IDL_FILES})
 
-add_executable(BlankApp WIN32 ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${XAML_FILES} ${IDL_FILES} "packages.config")
+add_executable(BlankApp WIN32 ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${XAML_FILES} ${IDL_FILES})
 
 # Don't forget to use precompiled header files
 set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "/Ycpch.h")
+
+set_source_files_properties(App.h PROPERTIES OBJECT_DEPENDS "App.xaml")
+set_source_files_properties(MainPage.h PROPERTIES OBJECT_DEPENDS "MainPage.xaml")
 
 set_target_properties(BlankApp PROPERTIES COMPILE_FLAGS "/Yupch.h")
 set_target_properties(BlankApp PROPERTIES VS_GLOBAL_ROOTNAMESPACE BlankApp)
@@ -69,7 +74,5 @@ set_target_properties(BlankApp PROPERTIES CXX_STANDARD 17)
 
 SET(CPPWINRT_REQUIRED_COMPILER_FLAGS "/std:c++latest /await")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CPPWINRT_REQUIRED_COMPILER_FLAGS}")
-
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/packages.config ${CMAKE_CURRENT_BINARY_DIR}/packages.config COPYONLY)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT BlankApp)
