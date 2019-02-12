@@ -59,8 +59,11 @@ source_group("Idl Files" FILES ${IDL_FILES})
 
 add_executable(BlankApp WIN32 ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${XAML_FILES} ${IDL_FILES})
 
+# Don't forget to use precompiled header files
+set_target_properties(BlankApp PROPERTIES COMPILE_FLAGS "/Yupch.h")
+set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "/Ycpch.h")
+
 set_target_properties(BlankApp PROPERTIES
-  VS_WINRT_COMPONENT TRUE
   CXX_STANDARD 17
 )
 
@@ -68,3 +71,5 @@ SET(CPPWINRT_REQUIRED_COMPILER_FLAGS "/std:c++latest /await")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CPPWINRT_REQUIRED_COMPILER_FLAGS}")
 
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/packages.config ${CMAKE_CURRENT_BINARY_DIR}/packages.config COPYONLY)
+
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT BlankApp)
