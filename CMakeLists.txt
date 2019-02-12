@@ -54,21 +54,17 @@ set_property(SOURCE ${ASSET_FILES} PROPERTY VS_DEPLOYMENT_LOCATION "Assets")
 
 set_property(SOURCE "App.xaml" PROPERTY VS_XAML_TYPE "ApplicationDefinition")
 
-#source_group("Source Files" FILES ${SOURCE_FILES})
-#source_group("Header Files" FILES ${HEADER_FILES})
-#source_group("Resource Files" FILES ${RESOURCE_FILES})
-#source_group("Xaml Files" FILES ${XAML_FILES})
-#source_group("Idl Files" FILES ${IDL_FILES})
-
 add_executable(BlankApp WIN32 ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES} ${XAML_FILES} ${IDL_FILES})
 
-# Don't forget to use precompiled header files
 set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "/Ycpch.h")
+set_target_properties(BlankApp PROPERTIES COMPILE_FLAGS "/Yupch.h")
 
+#### CUSTOM CMAKE STEPS
 set_source_files_properties(App.h PROPERTIES OBJECT_DEPENDS "App.xaml")
 set_source_files_properties(MainPage.h PROPERTIES OBJECT_DEPENDS "MainPage.xaml")
+set_target_properties(BlankApp PROPERTIES VS_CPPWINRT true)
+#### END CUSTOM CMAKE STEPS
 
-set_target_properties(BlankApp PROPERTIES COMPILE_FLAGS "/Yupch.h")
 set_target_properties(BlankApp PROPERTIES VS_GLOBAL_ROOTNAMESPACE BlankApp)
 set_target_properties(BlankApp PROPERTIES CXX_STANDARD 17)
 
