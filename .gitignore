@@ -261,3 +261,10 @@ __pycache__/
 *.pyc
 
 **/Generated Files/*
+**/CMakeFiles/*
+CMakeCache.txt
+cmake_install.cmake
+ALL_BUILD.vcxproj
+ALL_BUILD.vcxproj.*
+ZERO_CHECK.vcxproj
+ZERO_CHECK.vcxproj.*
