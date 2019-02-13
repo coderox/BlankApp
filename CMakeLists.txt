@@ -1,16 +1,16 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.8)
 project(BlankApp)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-configure_file(module.g.cpp "Generated Files/module.g.cpp" COPYONLY)
+configure_file(module.g.cpp "${CMAKE_BINARY_DIR}/Generated Files/module.g.cpp" COPYONLY)
 configure_file(packages.config "${CMAKE_BINARY_DIR}/packages.config" COPYONLY)
 
 set(SOURCE_FILES
   App.cpp
   MainPage.cpp
   pch.cpp
-  "Generated Files/module.g.cpp"
+  "${CMAKE_BINARY_DIR}/Generated Files/module.g.cpp"
   )
 
 set(HEADER_FILES
