@@ -4,6 +4,7 @@ project(BlankApp)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 configure_file(module.g.cpp "Generated Files/module.g.cpp" COPYONLY)
+configure_file(packages.config "${CMAKE_BINARY_DIR}/packages.config" COPYONLY)
 
 set(SOURCE_FILES
   App.cpp
@@ -44,6 +45,7 @@ set(CONTENT_FILES
 
 set(RESOURCE_FILES
   ${CONTENT_FILES} ${ASSET_FILES}
+  "${CMAKE_BINARY_DIR}/packages.config"
   BlankApp_TemporaryKey.pfx)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -72,3 +74,8 @@ SET(CPPWINRT_REQUIRED_COMPILER_FLAGS "/std:c++latest /await")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CPPWINRT_REQUIRED_COMPILER_FLAGS}")
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT BlankApp)
+
+add_custom_command(TARGET BlankApp
+  PRE_BUILD
+  COMMAND ../tools/nuget.exe restore ${CMAKE_BINARY_DIR}/BlankApp.sln
+)
