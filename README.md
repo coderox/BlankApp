@@ -14,7 +14,7 @@ If you want to generate a pure CMake solution (either by overwriting the current
 
 `cd BlankApp`
 
-`git submodules update`
+`git submodule update --init`
 
 4. Build a custom version of CMake
 There are a couple of issues with the current CMake releases that requires manual steps, or this minor update to CMake which fixes this by adding two features. The updated CMake doesn't modify the MIDL settings for the project, and it also makes the required sources files to be dependent on appropriate files. This requires us to build CMake with CMake as follows:
