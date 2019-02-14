@@ -4,7 +4,7 @@ This small sample demonstrates some of the issues that currently exists when try
 
 If you want to generate a pure CMake solution (either by overwriting the current project files or in a separate directory) here is the steps required.
 
-1. Install [CMake](https://cmake.org)
+1. Install [CMake](https://cmake.org) and [Python](https://www.python.org)
 
 2. Clone this repo
 
@@ -14,7 +14,7 @@ If you want to generate a pure CMake solution (either by overwriting the current
 
 `cd BlankApp`
 
-`git submodules update`
+`git submodule update --init`
 
 4. Build a custom version of CMake
 There are a couple of issues with the current CMake releases that requires manual steps, or this minor update to CMake which fixes this by adding two features. The updated CMake doesn't modify the MIDL settings for the project, and it also makes the required sources files to be dependent on appropriate files. This requires us to build CMake with CMake as follows:
@@ -27,20 +27,13 @@ There are a couple of issues with the current CMake releases that requires manua
 
 `cd ..`
 
-5. Generate the solution
+5. Generate and build the solution with a python wrapper around the cmake commands, including some additional steps required to populate project file with C++/WinRT nuget package
 
 `mkdir output`
 
 `cd output`
 
-`..\CMake\bin\debug\cmake.exe -DCMAKE_SYSTEM_NAME="WindowsStore" -DCMAKE_SYSTEM_VERSION="10.0" ..`
-
-6. Add C++/WinRT nuget package
-We also need to manually add the C++/WinRT nuget package to be able to build the solution, I have tried to leverage the existing packages.config but `nuget restore` fails to integrate the required elements into the .vcxproj. Open the solution in Visual Studio 2017 or Visual Studio 2019 and add the following C++/WinRT nuget package:
-
-Microsoft.Windows.CppWinRT
-
-7. Build and run the solution
+`python ../scripts/build.py BlankApp.vcxproj 1.0.190211.5`
 
 # Why do I need a custom CMake?
 There are two issues I haven't found a way to mitigate without a custom CMake version.
